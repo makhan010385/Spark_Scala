@@ -1,0 +1,195 @@
+Microsoft Windows [Version 10.0.19045.2604]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Makhan>spark-shell
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+23/03/08 11:17:51 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Spark context Web UI available at http://DESKTOP-6BPGLK7:4040
+23/03/08 11:18:03 WARN ProcfsMetricsGetter: Exception when trying to compute pagesize, as a result reporting of ProcessTree metrics is stopped
+Spark context available as 'sc' (master = local[*], app id = local-1678254472570).
+Spark session available as 'spark'.
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 3.3.2
+      /_/
+
+Using Scala version 2.12.15 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_361)
+Type in expressions to have them evaluated.
+Type :help for more information.
+
+
+Download and Install Apache Spark 2 x
+Introduction to Spark Shell
+Spark RDDs Part 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2....How to create an RDD in spark shell using basic Scala sequences like Array or List using parallelise method.
+ Also, we will see how to repartition the RDD when using parallelise method..................................................................................
+
+
+
+scala> help
+<console>:23: error: not found: value help
+       help
+       ^
+
+scala> val intArray= Array(1,2,3,4,5,6,7,8,9,0)
+intArray: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
+
+scala> val intRDD =sc.parallelize(intArray)
+intRDD: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[0] at parallelize at <console>:24
+
+scala> intRDD.take(4)
+res1: Array[Int] = Array(1, 2, 3, 4)
+
+scala> intRDD.collect()
+res2: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
+
+scala> intRDD.collect().foreach(println)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+
+scala> integer_RDD = sc.parallelize (range (20), 4)
+<console>:23: error: not found: value integer_RDD
+       integer_RDD = sc.parallelize (range (20), 4)
+       ^
+<console>:24: error: not found: value integer_RDD
+       val $ires6 = integer_RDD
+                    ^
+
+scala> val integer_RDD = sc.parallelize (range (20), 4)
+<console>:23: error: not found: value range
+       val integer_RDD = sc.parallelize (range (20), 4)
+                                         ^
+
+scala> IntRDD.partitions.size
+<console>:23: error: not found: value IntRDD
+       IntRDD.partitions.size
+       ^
+
+scala> intRDD.partitions.size
+res5: Int = 8
+
+
+
+3.............creating an Spark RDD from a text file using textFile method. Also, we will see how we can modify default partitions of the red with textFile method..............
+
+fileRDD: org.apache.spark.rdd.RDD[String] = C:/Scala-Spark/spark3/Sample-Data-Movie-Review-Sentence-Polarity.tsv MapPartitionsRDD[3] at textFile at <console>:23
+
+scala> fileRDD.first()
+res7: String = "Review" "Sentiment"
+
+scala> fileRDD.take(10)
+res8: Array[String] = Array("Review"    "Sentiment", "the rock is destined to be the 21st century's new "" conan "" and that he's going to make a splash even greater than arnold schwarzenegger , jean-claud van damme or steven segal . "
+        "positive", "the gorgeously elaborate continuation of "" the lord of the rings "" trilogy is so huge that a column of words cannot adequately describe co-writer/director peter jackson's expanded vision of j . r . r . tolkien's middle-earth . "     "positive", "effective but too-tepid biopic"    "positive", "if you sometimes like to go to the movies to have fun , wasabi is a good place to start . "        "positive", "emerges as something rare , an issue movie that's so honest and keenly observed that it doesn't feel like one . "  "positive", "the film provides some great i...
+
+scala> fileRDD.take(10).foreach(println)
+"Review"        "Sentiment"
+"the rock is destined to be the 21st century's new "" conan "" and that he's going to make a splash even greater than arnold schwarzenegger , jean-claud van damme or steven segal . "  "positive"
+"the gorgeously elaborate continuation of "" the lord of the rings "" trilogy is so huge that a column of words cannot adequately describe co-writer/director peter jackson's expanded vision of j . r . r . tolkien's middle-earth . " "positive"
+"effective but too-tepid biopic"        "positive"
+"if you sometimes like to go to the movies to have fun , wasabi is a good place to start . "    "positive"
+"emerges as something rare , an issue movie that's so honest and keenly observed that it doesn't feel like one . "
+        "positive"
+"the film provides some great insight into the neurotic mindset of all comics -- even those who have reached the absolute top of the game . "   "positive"
+"offers that rare combination of entertainment and education . "        "positive"
+"perhaps no picture ever made has more literally showed that the road to hell is paved with good intentions . " "positive"
+"steers turns in a snappy screenplay that curls at the edges ; it's so clever you want to hate it . but he somehow pulls it off . "     "positive"
+
+scala> fileRDD.partitions.size
+res10: Int = 2
+
+scala> val fileRDD1=sc.textFile("C:/Scala-Spark/spark3/Sample-Data-Movie-Review-Sentence-Polarity.tsv",10)
+fileRDD1: org.apache.spark.rdd.RDD[String] = C:/Scala-Spark/spark3/Sample-Data-Movie-Review-Sentence-Polarity.tsv MapPartitionsRDD[5] at textFile at <console>:23
+
+scala> fileRDD1.partitions.size
+res11: Int = 10
+
+
+4...................................RDD Transformations...................................................
+
+scala> val data = Array(
+     | "Hello There " ,
+     | "Welcome t Spark 2.0",
+     | "This is makhan , your instructor for this spark course",
+     | "Enjoy learning Spark",
+     | "Happy Coding")
+data: Array[String] = Array("Hello There ", Welcome t Spark 2.0, This is makhan , your instructor for this spark course, Enjoy learning Spark, Happy Coding)
+
+scala> val dataRDD =sc.parallelize(data)
+dataRDD: org.apache.spark.rdd.RDD[String] = ParallelCollectionRDD[6] at parallelize at <console>:24
+
+scala> val filterRDD= dataRDD.filter(line=>line.length>20)
+filterRDD: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[7] at filter at <console>:23
+
+scala> filterRDD.collect()
+res12: Array[String] = Array(This is makhan , your instructor for this spark course)
+
+scala> filterRDD.collect.foreach(println)
+This is makhan , your instructor for this spark course
+
+scala> val mapRDD= dataRDD.map(line =>line.split(" "))
+mapRDD: org.apache.spark.rdd.RDD[Array[String]] = MapPartitionsRDD[8] at map at <console>:23
+
+scala> mapRDD.collect()
+res16: Array[Array[String]] = Array(Array(Hello, There), Array(Welcome, t, Spark, 2.0), Array(This, is, makhan, ,, your, instructor, for, this, spark, course), Array(Enjoy, learning, Spark), Array(Happy, Coding))
+
+scala> val flatRDD= dataRDD.flatMap(line=>line.split(" "))
+flatRDD: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[9] at flatMap at <console>:23
+
+scala> flatRDD.collect()
+res17: Array[String] = Array(Hello, There, Welcome, t, Spark, 2.0, This, is, makhan, ,, your, instructor, for, this, spark, course, Enjoy, learning, Spark, Happy, Coding)
+
+
+
+scala> val numArray=Array(1,2,2,3,3,4,6,5,7,7)
+numArray: Array[Int] = Array(1, 2, 2, 3, 3, 4, 6, 5, 7, 7)
+
+scala> val numRDD=sc.parallelize(numArray)
+numRDD: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[10] at parallelize at <console>:24
+
+scala> val distinctElementRDD= numRDD.distinct()
+distinctElementRDD: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[13] at distinct at <console>:23
+
+scala> distinctElementRDD.collect()
+res18: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7)
+
+
+
+5...........................................Creating Spark Project with IntelliJ Maven........................................................................
+
+6........................................Creating Spark Project with IntelliJ SBT............................................................................
+7........................................Creating Spark Context and RDD in Spark 1 x style....................................................................
+
+
+
+
